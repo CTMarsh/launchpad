@@ -15,7 +15,7 @@ http:
       rule: "Host(`pihole.local.example.com`)"
       middlewares:
         - default-headers
-        - addprefix-pihole
+        - pihole-redirect
       tls: {}
       service: pihole
     homebridge:
@@ -151,9 +151,10 @@ http:
         passHostHeader: true
 #endregion
   middlewares:
-    addprefix-pihole:
-      addPrefix:
-        prefix: "/admin"
+    pihole-redirect:
+      redirectRegex:
+        regex: "^https?://pihole.local.example.com/$"
+        replacement: "https://pihole.local.example.com/admin/"
     https-redirect:
       redirectScheme:
         scheme: https
